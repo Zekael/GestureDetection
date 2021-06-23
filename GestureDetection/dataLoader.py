@@ -3,48 +3,37 @@ import csv
 import numpy as np
 
 
-
 class Loader:
     """Load csv data for hand points"""
-
 
     @staticmethod
     def splitTrainTarget(loadedCsv):
        
-        cols = [0,1]
-        targetDF = loadedCsv[loadedCsv.columns[cols]]
+        seriesMapper = {
+        0:[1,0,0,0,0,0],
+        1:[0,1,0,0,0,0],
+        2:[0,0,1,0,0,0],
+        3:[0,0,0,1,0,0],
+        4:[0,0,0,0,1,0],
+        5:[0,0,0,0,0,1]
+        }
+
+        targetDF = loadedCsv[loadedCsv.columns[0]]
         trainDF = loadedCsv[loadedCsv.columns[range(2,65)]]
+
+        print(trainDF.head(100))
         
-        newTarget = pd.DataFrame(columns=['dummy','fist','point','thumbs up','hand'])
+        newTarget = pd.DataFrame(columns=['dummy','one','peace','okay','halt','five'])
 
-        for index,row in targetDF.iterrows():
-            
-            handVal = row[1]
 
+        for val in targetDF:
             try:
-                if int(row[0])==1:
-                    newRow = pd.Series([0,1,0,0,handVal],index=['dummy','fist','point','thumbs up','hand'])
-                    #print(newRow)
-                    newTarget = newTarget.append(newRow,ignore_index=True)
-
-                elif int(row[0])==2:
-                    newRow = pd.Series([0,0,1,0,handVal],index=['dummy','fist','point','thumbs up','hand'])
-                    #print(newRow)
-                    newTarget =newTarget.append(newRow,ignore_index=True)
-
-                elif int(row[0])==3:
-                    newRow = pd.Series([0,0,0,1,handVal],index=['dummy','fist','point','thumbs up','hand'])
-                    #print(newRow)
-                    newTarget =newTarget.append(newRow,ignore_index=True)
-
-                else:
-                    newRow = pd.Series([1,0,0,0,handVal],index=['dummy','fist','point','thumbs up','hand'])
-                    #print(newRow)
-                    newTarget =newTarget.append(newRow,ignore_index=True)
+                array = seriesMapper[int(val)]
+                newSeries = pd.Series(data=array,index=['dummy','one','peace','okay','halt','five'])
+                newTarget = newTarget.append(newSeries,ignore_index=True)
 
             except:
-                print("Error occured at ",index,row)
-                
+                print("Error Occured")
 
         return trainDF.astype(float), newTarget.astype(float)
 
@@ -58,7 +47,7 @@ class Loader:
 
 
 if __name__ == "__main__":
-    csvFrame=Loader.loadFromCsv("./data/handData1624351939.2806554.csv",';')
+    csvFrame=Loader.loadFromCsv("./data/handData1624449714.2942007.csv",' ')
     trainingData, validationData = Loader.splitTrainTarget(csvFrame)
 
     print(trainingData.head(),validationData.head())

@@ -22,14 +22,14 @@ class ModelHandler():
         self.model.add(layers.Dense(128,activation="relu"))
         self.model.add(layers.Dropout(0.2))
         self.model.add(layers.Dense(64,activation="relu"))
-        self.model.add(layers.Dense(4,activation="softmax"))
+        self.model.add(layers.Dense(6,activation="softmax"))
 
 
     def fit(self,training_data,testing_data,Epochs=250,batch_size=5):
         print("Training_data shape: "+str(training_data.shape))
         print("Testing_data shape: "+str(testing_data.shape))
         self.model.compile(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
-        self.model.fit(training_data,testing_data,callbacks=[self.tensorboard_callbacks])
+        self.model.fit(training_data,testing_data,callbacks=[self.tensorboard_callbacks],epochs=Epochs)
 
 
     def evaluate(self,validation_x,validation_y):
@@ -53,29 +53,31 @@ class ModelHandler():
 
         argmaxPred = np.argmax(pred)
 
-        results = {
-            0:"Nothing",
-            1:"fist",
-            2:"point",
-            3:"Thumbs up"
-            }
+        seriesMapper = {
+        0:"none",
+        1:"one",
+        2:"yo",
+        3:"okay",
+        4:"halt",
+        5:"five",
+        }
 
-        return results[argmaxPred]
+        return seriesMapper[argmaxPred]
 
 
 if __name__ == "__main__":
     trainer = ModelHandler()
 
-    csvData = Loader.loadFromCsv("./data/handData1624351939.2806554.csv",';')
+    csvData = Loader.loadFromCsv("./data/handData1624449714.2942007.csv",',')
     training, testing = Loader.splitTrainTarget(csvData)
-    testing = testing.drop(['hand'],axis=1)
-    #print(testing.head(2))
+    print(testing.head(2))
+    print(training.head())
 
     x_train, x_test, y_train, y_test = train_test_split(training,testing,test_size=0.2,random_state=456, shuffle=True)
 
-    #print(x_train.head(),x_test.head(),y_train.head(),y_test.head())
+    print(x_train.head(),x_test.head(),y_train.head(),y_test.head())
 
-    trainer.fit(x_train,y_train,Epochs=700,batch_size=5)
+    trainer.fit(x_train,y_train,Epochs=100,batch_size=10)
 
     trainer.evaluate(x_test,y_test)
 
