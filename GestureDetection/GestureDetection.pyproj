@@ -4,14 +4,15 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>3a7be14f-f27a-432f-918e-4a260c8da3dd</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>GestureTrainer.py</StartupFile>
+    <StartupFile>GestureDetection.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>GestureDetection</Name>
     <RootNamespace>GestureDetection</RootNamespace>
-    <InterpreterId>CondaEnv|CondaEnv|CV</InterpreterId>
+    <InterpreterId>CondaEnv|CondaEnv|cv</InterpreterId>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,6 +26,9 @@
     <Compile Include="DataGeneration.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataLoader.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GestureDetection.py" />
     <Compile Include="GestureTrainer.py">
       <SubType>Code</SubType>
@@ -32,16 +36,31 @@
     <Compile Include="HandTracking.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="kerasTrainer.py">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="CondaEnv|CondaEnv|CV" />
+    <InterpreterReference Include="CondaEnv|CondaEnv|cv" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="logs\" />
+    <Folder Include="logs\fit\" />
+    <Folder Include="logs\fit\20210623-082325\" />
+    <Folder Include="logs\fit\20210623-082325\train\" />
+    <Folder Include="logs\fit\20210623-082325\train\plugins\" />
+    <Folder Include="logs\fit\20210623-082325\train\plugins\profile\" />
+    <Folder Include="logs\fit\20210623-082325\train\plugins\profile\2021_06_23_06_23_50\" />
     <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logs\fit\20210623-082325\train\events.out.tfevents.1624429429.SN10829.17040.232.v2" />
+    <Content Include="logs\fit\20210623-082325\train\events.out.tfevents.1624429430.SN10829.profile-empty" />
+    <Content Include="logs\fit\20210623-082325\train\plugins\profile\2021_06_23_06_23_50\SN10829.input_pipeline.pb" />
+    <Content Include="logs\fit\20210623-082325\train\plugins\profile\2021_06_23_06_23_50\SN10829.kernel_stats.pb" />
+    <Content Include="logs\fit\20210623-082325\train\plugins\profile\2021_06_23_06_23_50\SN10829.memory_profile.json.gz" />
+    <Content Include="logs\fit\20210623-082325\train\plugins\profile\2021_06_23_06_23_50\SN10829.overview_page.pb" />
+    <Content Include="logs\fit\20210623-082325\train\plugins\profile\2021_06_23_06_23_50\SN10829.tensorflow_stats.pb" />
+    <Content Include="logs\fit\20210623-082325\train\plugins\profile\2021_06_23_06_23_50\SN10829.trace.json.gz" />
+    <Content Include="logs\fit\20210623-082325\train\plugins\profile\2021_06_23_06_23_50\SN10829.xplane.pb" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
