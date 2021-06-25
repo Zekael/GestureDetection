@@ -8,7 +8,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 captureDevice = cv2.VideoCapture(0)
 detect = HandDetection(static_image_mode=False,max_num_hands=1,min_detection_confidence=0.7,min_tracking_confidence=0.5)
 model = ModelHandler()
-model.loadModel("./Model/model20210623-150250")
+model.loadModel("./Model/usableModelV1.2")
 
 while True:
 
@@ -34,7 +34,7 @@ while True:
         pred = model.predict(row)
         predText = model.predictionToText(pred)
         print("Prediction: ",np.round(pred,3))
-        cv2.putText(img,str(predText),(10,30),font, 1,(0,0,0,1),2)
+        cv2.putText(img,str(predText),(10,30),font, 1,(0,255,0,1),2)
 
 
     cv2.imshow('MediaPipe Hands', img)

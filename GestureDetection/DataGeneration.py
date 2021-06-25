@@ -37,6 +37,9 @@ with(open(("./data/handData"+str(time.time())+".csv"),'w+',newline='')) as csvfi
 
         img,results=detect.detect(img,draw=True)
 
+        if keyboard.is_pressed('u'):
+            print("GN: ",gestureName)
+            print("LR: ",handLR)
 
         if results.multi_hand_landmarks is not None:
             if keyboard.is_pressed(' '):

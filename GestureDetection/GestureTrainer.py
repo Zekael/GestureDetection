@@ -19,7 +19,7 @@ class ModelHandler():
         self.model = keras.Sequential()
         self.model.add(layers.Dense(64,activation="relu",input_shape=input_shape))
         self.model.add(layers.Dropout(0.3))
-        self.model.add(layers.Dense(128,activation="relu"))
+        self.model.add(layers.Dense(64,activation="relu"))
         self.model.add(layers.Dropout(0.2))
         self.model.add(layers.Dense(64,activation="relu"))
         self.model.add(layers.Dense(6,activation="softmax"))
@@ -67,17 +67,19 @@ class ModelHandler():
 
 if __name__ == "__main__":
     trainer = ModelHandler()
+    
+    trainer.loadModel("./Model/usableModelV1")
 
-    csvData = Loader.loadFromCsv("./data/handData1624449714.2942007.csv",',')
+    csvData = Loader.loadFromCsv("./data/collective.csv",',')
     training, testing = Loader.splitTrainTarget(csvData)
-    print(testing.head(2))
-    print(training.head())
+    #print(testing.head(2))
+    #print(training.head())
 
-    x_train, x_test, y_train, y_test = train_test_split(training,testing,test_size=0.2,random_state=456, shuffle=True)
+    x_train, x_test, y_train, y_test = train_test_split(training,testing,test_size=0.2,random_state=5678, shuffle=True)
 
     print(x_train.head(),x_test.head(),y_train.head(),y_test.head())
 
-    trainer.fit(x_train,y_train,Epochs=100,batch_size=10)
+    trainer.fit(x_train,y_train,Epochs=200,batch_size=20)
 
     trainer.evaluate(x_test,y_test)
 
